@@ -1,0 +1,66 @@
+<html>
+  <head>
+  <LINK href="./src/lib/confs/style.css" rel="stylesheet" type="text/css">
+	<script>
+		var allEvents = [];
+		
+		function getAndDeployInfo() {
+			getInfo(config.web);
+		}
+		
+		function getInfo(webParams) {
+			for (var i = 0 ; i < webParams.length ; i++) {
+				if(webParams[i].type === 'movies') {
+					httpGetAsync(
+						webParams[i].url, 
+						function(res) {
+							parseData(res, webParams[i])
+						})
+				}
+			}
+		}
+		
+		function parseData(pageData, configParams) {
+			var DOMParse = HTMLParser(pageData),
+				fieldData = [];
+			alert(DOMParse.getElementById(configParams.fields.divID).innerHTML);
+		}
+		
+		function updateMovies() {
+			document.getElementById("movies").innerHTML = "<p>Hi Megan</p>";
+		}
+		
+		//From stack overflow
+		function httpGetAsync(theUrl, callback) {
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.onreadystatechange = function() { 
+				if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+					callback(xmlHttp.responseText);
+			}
+			xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+			xmlHttp.send(null);
+		}
+		
+		//From Mozilla dev page https://developer.mozilla.org/en-US/Add-ons/Code_snippets/HTML_to_DOM
+		function HTMLParser(aHTMLString){
+		  var html = document.implementation.createDocument("http://www.w3.org/1999/xhtml", "html", null),
+			body = document.createElementNS("http://www.w3.org/1999/xhtml", "body");
+		html.documentElement.appendChild(body);
+
+		  body.appendChild(Components.classes["@mozilla.org/feed-unescapehtml;1"]
+			.getService(Components.interfaces.nsIScriptableUnescapeHTML)
+			.parseFragment(aHTMLString, false, null, body));
+
+		  return body;
+		}
+	</script>
+	<script src="./src/lib/confs/scrape2.conf.js"></script>
+	<script src="./src/lib/helpers/sorttable.js"></script>
+  </head>
+
+  <body>
+    <input type="button" onclick="getAndDeployInfo()" value="update movies!"/>
+	<div id="movies"></div>
+	<div id="theatres"></div>
+  </body>
+</html>

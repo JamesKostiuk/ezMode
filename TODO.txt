@@ -1,0 +1,11 @@
+TODO list
+Move app.js into /src
+Create a webpage that runs the script, so it doesn't have to be run separately.
+Add in more cinemas, theatres, and hard-coded lists (for places like Descendants)
+Viability of comedy shows and other potential outings. Ticket Master?
+Second page that accepts a date and queries for events on that date (query for all future events and allow filtering?)
+Update CSS to make it look nice
+Angular front end for responsiveness?
+Host on a server?
+Create profiles and save calendar events
+Documentation
